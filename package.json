@@ -1,0 +1,51 @@
+{
+	"name": "svelte-kit-track",
+	"version": "0.0.1",
+	"author": "tianjiaqi",
+	"scripts": {
+		"dev": "vite dev --host",
+		"build": "vite build && cp -r static/* build/",
+		"preview": "vite preview",
+		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
+		"test": "vitest",
+		"lint": "eslint .",
+		"lint:fix": "eslint . --fix"
+	},
+	"devDependencies": {
+		"@fontsource/fira-mono": "^5.0.0",
+		"@neoconfetti/svelte": "^2.0.0",
+		"@sveltejs/adapter-auto": "^3.0.0",
+		"@sveltejs/adapter-static": "^3.0.4",
+		"@sveltejs/kit": "^2.0.0",
+		"@sveltejs/vite-plugin-svelte": "^3.0.0",
+		"@tailwindcss/typography": "^0.5.14",
+		"@types/eslint": "^9.6.0",
+		"@types/mapbox__polyline": "^1.0.5",
+		"@types/node": "^22.2.0",
+		"autoprefixer": "^10.4.20",
+		"eslint": "^9.0.0",
+		"eslint-plugin-svelte": "^2.36.0",
+		"globals": "^15.0.0",
+		"svelte": "^5.0.0-next.1",
+		"svelte-check": "^3.6.0",
+		"tailwindcss": "^3.4.9",
+		"typescript": "^5.0.0",
+		"typescript-eslint": "^8.0.0",
+		"vite": "^5.0.3",
+		"vitest": "^2.0.0"
+	},
+	"type": "module",
+	"dependencies": {
+		"@garmin/fitsdk": "^21.141.0",
+		"@mapbox/polyline": "^1.2.1",
+		"@observablehq/plot": "^0.6.16",
+		"add": "^2.0.6",
+		"dayjs": "^1.11.12",
+		"fflate": "^0.8.2",
+		"gpx2fit": "^0.0.5",
+		"gpxparser": "^3.0.8",
+		"ol": "^10.0.0",
+		"pnpm": "^9.7.1"
+	}
+}

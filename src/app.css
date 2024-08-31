@@ -1,0 +1,67 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+
+* {
+	font-family: "Abel","Oswald",sans-serif;
+  user-select: none;
+  font-display: swap;
+}
+
+html,body {
+  background-color: var(--color-bg-base);
+}
+
+@layer base {
+  :root {
+    --color-bg-base:#1e293b;
+    --color-text-base:rgb(255, 255, 255);
+    --color-primary:rgb(248, 113, 113);
+  }
+
+  .dark {
+    --color-bg-base:rgba(0,0,0,1);
+    --color-text-base:rgba(255,255,255,1);
+  }
+}
+
+
+::-webkit-scrollbar {
+  width: 8px;  
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2); 
+  border-radius: 10px; 
+  border: 2px solid transparent; 
+  background-clip: padding-box; 
+}
+        
+::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
+}
+
+@media (prefers-color-scheme: dark) {
+  ::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.2);
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+  }
+
+  * {
+    scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
+  }
+}
