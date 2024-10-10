@@ -3,6 +3,7 @@
   import dayjs from "dayjs";
   import { useActivities } from "../hooks/useActivities.svelte";
   const { lastActivity } = $derived(useActivities());
+
 </script>
 
 <div class="flex justify-between items-center">
@@ -15,9 +16,13 @@
   </div>
   <div>
     <span>Last Activity: </span>
+    {#if lastActivity?.startTime}
     {formatTimeDifference(
-      lastActivity?.startTime,
-      dayjs(Date.now()).format("YYYY-MM-DD"),
+      dayjs(lastActivity?.startTime).unix(),
+      dayjs().unix(),
     )} ago
+    {:else}
+      No recent activity
+    {/if}
   </div>
 </div>

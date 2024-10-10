@@ -87,9 +87,9 @@ export function formatTime(time:number){
 }
 
 
-export function formatTimeDifference(startDate: string, endDate: string) {
-  const start = dayjs(startDate);
-  const end = dayjs(endDate);
+export function formatTimeDifference(startDate: number, endDate: number) {
+  const start = dayjs.unix(startDate);
+  const end = dayjs.unix(endDate);
   const diffDays = end.diff(start, 'day');
   
   if (diffDays < 1) {
