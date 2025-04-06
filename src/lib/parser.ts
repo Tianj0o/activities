@@ -32,7 +32,11 @@ export function parseFit(buffer: ArrayBuffer):FitnessInfo{
     const data = decoder.read()
     const polyline = [] as Array<[number, number]>
     const recordMesgs = data.messages.recordMesgs as FitRecordMesgs[]
-    for (const record of recordMesgs) {
+    
+    // 过滤异常点
+    const filteredRecords = filterAnomalousPoints(recordMesgs)
+    
+    for (const record of filteredRecords) {
       polyline.push([record.positionLat / 11930465, record.positionLong / 11930465])
     }
 
@@ -103,4 +107,50 @@ export function formatTimeDifference(startDate: number, endDate: number) {
   } else {
     return `${diffDays} days`;
   }
+}
+
+// 添加过滤异常点的函数
+function filterAnomalousPoints(records: FitRecordMesgs[]): FitRecordMesgs[] {
+  if (records.length <= 1) return records;
+  
+  const filteredRecords: FitRecordMesgs[] = [records[0]];
+  const maxDistanceThreshold = 1000; // 最大距离阈值（米），超过这个值认为是异常点
+  
+  for (let i = 1; i < records.length; i++) {
+    const prevPoint = filteredRecords[filteredRecords.length - 1];
+    const currentPoint = records[i];
+    
+    // 计算两点之间的距离（使用简化的哈弗辛公式计算地理距离）
+    const distance = calculateDistance(
+      prevPoint.positionLat / 11930465, 
+      prevPoint.positionLong / 11930465,
+      currentPoint.positionLat / 11930465, 
+      currentPoint.positionLong / 11930465
+    );
+    
+    // 如果距离小于阈值，则保留该点
+    if (distance < maxDistanceThreshold) {
+      filteredRecords.push(currentPoint);
+    }else{
+      console.log('filter-------')
+    }
+  }
+  
+  return filteredRecords;
+}
+
+// 计算两个地理坐标点之间的距离（米）
+function calculateDistance(lat1: number, lon1: number, lat2: number, lon2: number): number {
+  const R = 6371e3; // 地球半径（米）
+  const φ1 = lat1 * Math.PI / 180;
+  const φ2 = lat2 * Math.PI / 180;
+  const Δφ = (lat2 - lat1) * Math.PI / 180;
+  const Δλ = (lon2 - lon1) * Math.PI / 180;
+
+  const a = Math.sin(Δφ/2) * Math.sin(Δφ/2) +
+          Math.cos(φ1) * Math.cos(φ2) *
+          Math.sin(Δλ/2) * Math.sin(Δλ/2);
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+
+  return R * c;
 }
